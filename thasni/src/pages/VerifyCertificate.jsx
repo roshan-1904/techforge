@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, Award, Calendar, School, Briefcase, Hash } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 const VerifyCertificate = () => {
   const { id } = useParams();
@@ -13,7 +14,7 @@ const VerifyCertificate = () => {
   useEffect(() => {
     const verify = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/users/verify/${id}`);
+        const res = await axios.get(`${API_BASE_URL}/api/users/verify/${id}`);
         setData(res.data);
       } catch (err) {
         setError('Invalid or Not Found Certificate');

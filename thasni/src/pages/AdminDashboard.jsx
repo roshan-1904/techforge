@@ -8,6 +8,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { useSearchParams } from 'react-router-dom';
 import CertificateGenerator from './CertificateGenerator';
+import { API_BASE_URL } from '../config';
 
 const AdminDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -38,8 +39,8 @@ const AdminDashboard = () => {
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
       const [regRes, statsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/admin/registrations', config),
-        axios.get('http://localhost:5000/api/admin/stats', config)
+        axios.get(`${API_BASE_URL}/api/admin/registrations`, config),
+        axios.get(`${API_BASE_URL}/api/admin/stats`, config)
       ]);
       setRegistrations(regRes.data);
       setStats(statsRes.data);
@@ -52,7 +53,7 @@ const AdminDashboard = () => {
     const loadingToast = toast.loading('Generating premium certificate and sending email...');
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      await axios.put(`http://localhost:5000/api/admin/approve/${id}`, { theme: selectedTheme }, config);
+      await axios.put(`${API_BASE_URL}/api/admin/approve/${id}`, { theme: selectedTheme }, config);
       toast.success('Approved and Certificate Sent', { id: loadingToast });
       fetchData();
     } catch (error) {
@@ -63,7 +64,7 @@ const AdminDashboard = () => {
   const handleReject = async (id) => {
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      await axios.put(`http://localhost:5000/api/admin/reject/${id}`, {}, config);
+      await axios.put(`${API_BASE_URL}/api/admin/reject/${id}`, {}, config);
       toast.success('Registration Rejected');
       fetchData();
     } catch (error) {
@@ -78,9 +79,9 @@ const AdminDashboard = () => {
     const loadingToast = toast.loading('Generating premium PDF on server...');
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      const response = await axios.post('http://localhost:5000/api/admin/preview-pdf', data, config);
+      const response = await axios.post(`${API_BASE_URL}/api/admin/preview-pdf`, data, config);
       
-      const pdfUrl = `http://localhost:5000${response.data.pdfUrl}`;
+      const pdfUrl = `${API_BASE_URL}${response.data.pdfUrl}`;
       
       const fileResponse = await axios.get(pdfUrl, { 
         responseType: 'blob',

@@ -3,6 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '../config';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ const AdminLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/admin/login', { email, password });
+      const res = await axios.post(`${API_BASE_URL}/api/admin/login`, { email, password });
       localStorage.setItem('adminToken', res.data.token);
       toast.success('Login successful');
       navigate('/dashboard');

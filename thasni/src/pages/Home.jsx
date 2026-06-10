@@ -3,6 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Mail, Phone, GraduationCap, Building2, BookOpen, Calendar, ArrowRight, Sparkles, CheckCircle2, Award, Zap, AlertCircle, Check } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 const Home = () => {
   const [formData, setFormData] = useState({
@@ -100,7 +101,7 @@ const Home = () => {
 
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/users/register', formData);
+      await axios.post(`${API_BASE_URL}/api/users/register`, formData);
       toast.success('Registration successful!');
       setIsSubmitted(true);
     } catch (error) {
