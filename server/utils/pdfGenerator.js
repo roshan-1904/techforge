@@ -62,7 +62,7 @@ const generateCertificate = async (userData, certificateId) => {
     const themeKey = userData.theme || 'gold';
     const currentTheme = THEMES[themeKey] || THEMES.gold;
     
-    const verifyUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/verify/${certificateId}`;
+    const verifyUrl = `${process.env.CLIENT_URL}/verify/${certificateId}`;
     const qrCodeDataUrl = await QRCode.toDataURL(verifyUrl, {
         color: {
             dark: themeKey === 'midnight' ? '#ffffff' : '#000000',
@@ -215,8 +215,14 @@ const generateCertificate = async (userData, certificateId) => {
     let browser;
     try {
         browser = await puppeteer.launch({
-            headless: "new",
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
+            headless: true,
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || puppeteer.executablePath(),
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu'
+            ]
         });
         
         const page = await browser.newPage();

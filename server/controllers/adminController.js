@@ -6,7 +6,7 @@ const { generateCertificate } = require('../utils/pdfGenerator');
 const sendEmail = require('../utils/email');
 
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET || 'supersecret', { expiresIn: '30d' });
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
 
 const loginAdmin = async (req, res) => {

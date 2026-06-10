@@ -9,7 +9,10 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/certificates', express.static(path.join(__dirname, 'public/certificates')));
