@@ -1,0 +1,14 @@
+{
+  "name": "techforge-certificate-generator",
+  "version": "1.0.0",
+  "description": "Full-stack Certificate Management System",
+  "scripts": {
+    "server": "cd server && node index.js",
+    "client": "cd thasni && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "npm install && cd server && npm install && cd ../thasni && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
